@@ -4,11 +4,11 @@ speedtest:
   interval: 1800
 
 mqtt:
-  username: boingo
-  password: boingo
-  server: 192.168.0.77
+  username: speedtest-mqtt
+  password: speedtest-mqtt
+  server: 127.0.0.1
   server_port: 1883
-  topic: test/speedtest
+  topic: speedtest
   qos: 0
 
 # Extra debug messages when set to true
