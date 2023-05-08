@@ -1,16 +1,16 @@
+#!/usr/bin/python3
+
+import yaml
 import speedtest
 import paho.mqtt.client as mqtt
 import json
 import time
 import os
 
-servers = []
-# If you want to test against a specific server
-# servers = [1234]
+from configurator import Config
 
-threads = None
-# If you want to use a single threaded test
-# threads = 1
+with open("config.yaml", "r") as file:
+    config = Config(yaml.safe_load(file))
 
 # Define MQTT event callbacks
 def on_connect(client, userdata, flags, rc):
@@ -47,17 +47,17 @@ mqttc.on_disconnect = on_disconnect
 # Uncomment to enable debug messages
 # mqttc.on_log = on_log
 
-mqttc.username_pw_set("boingo", password="boingo")
-mqttc.connect('192.168.0.77', 1883, 60)
+mqttc.username_pw_set(config.mqtt.username, password=config.mqtt.password)
+mqttc.connect(config.mqtt.server, config.mqtt.serverPort, 60)
 
 mqttc.loop_start()
 
 s = speedtest.Speedtest()
 while True:
-    s.get_servers(servers)
+    s.get_servers(config.speedtest.servers)
     s.get_best_server()
-    s.download(threads=threads)
-    s.upload(threads=threads)
+    s.download(threads=config.speedtest.threads)
+    s.upload(threads=config.speedtest.threads)
     s.results.share()
 
     results_dict = s.results.dict()
@@ -67,10 +67,10 @@ while True:
     print(data)
 
     mqttc.publish(
-        "sensors/fios",
+        config.mqtt.topic,
         payload=data,
-        qos=0,
+        qos=config.mqtt.qos,
         retain=False,
     )
 
-    time.sleep(1800)
+    time.sleep(config.speedtest.interval)

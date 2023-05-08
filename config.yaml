@@ -1,0 +1,15 @@
+speedtest:
+  servers: []
+  threads: 0
+  interval: 1800
+
+mqtt:
+  username: boingo
+  password: boingo
+  server: 192.168.0.77
+  server_port: 1883
+  topic: test/speedtest
+  qos: 0
+
+# Extra debug messages
+debug: true
