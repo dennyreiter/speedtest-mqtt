@@ -27,8 +27,8 @@ class YamlDict:
 class Speedtest(YamlDict):
     def __init__(self, raw):
         self.servers = self.__load__(raw, "servers", [])
-        self.threads = self.__load__(raw, "threads",None)
-        self.interval = self.__load__(raw, "interval",7200)
+        self.threads = self.__load__(raw, "threads", None)
+        self.interval = self.__load__(raw, "interval", 7200)
 
 
 class Mqtt(YamlDict):

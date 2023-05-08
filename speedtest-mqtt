@@ -5,12 +5,12 @@ import speedtest
 import paho.mqtt.client as mqtt
 import json
 import time
-import os
 
 from configurator import Config
 
 with open("config.yaml", "r") as file:
     config = Config(yaml.safe_load(file))
+
 
 # Define MQTT event callbacks
 def on_connect(client, userdata, flags, rc):
@@ -61,8 +61,8 @@ while True:
     s.results.share()
 
     results_dict = s.results.dict()
-    results_dict['download'] = int(results_dict['download']/1000000)
-    results_dict['upload'] = int(results_dict['upload']/1000000)
+    results_dict["download"] = int(results_dict["download"] / 1000000)
+    results_dict["upload"] = int(results_dict["upload"] / 1000000)
     data = json.dumps(results_dict)
     print(data)
 
