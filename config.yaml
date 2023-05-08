@@ -11,5 +11,5 @@ mqtt:
   topic: test/speedtest
   qos: 0
 
-# Extra debug messages
-debug: true
+# Extra debug messages when set to true
+debug: false
